@@ -62,10 +62,17 @@ int doomsdayAlgorithm(int year, int month, int day) {
     if (dayOfWeek < 0) dayOfWeek += 7;
     return dayOfWeek;
 }
-
 string getDayOfWeek(int dayOfWeek) {
-    string daysOfWeek[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-    return daysOfWeek[dayOfWeek];
+    switch (dayOfWeek) {
+        case 0: return "Sunday"; break;
+        case 1: return "Monday"; break;
+        case 2: return "Tuesday"; break;
+        case 3: return "Wednesday"; break;
+        case 4: return "Thursday"; break;
+        case 5: return "Friday"; break;
+        case 6: return "Saturday"; break;
+        default: return "Invalid day"; break;
+    }
 }
 
 void giveHint(int year, int month, int day) {
@@ -201,14 +208,17 @@ void playGame() {
 
         mtx.lock();
         cout << "\nWhat day of the week was " << month << "/" << day << "/" << year << "?" << endl;
+        cout << "Enter the number corresponding to the day (0: Sunday, 1: Monday, ..., 6: Saturday): ";
         mtx.unlock();
-        string answer;
+        int answer;
         cin >> answer;
 
-        int correctDayOfWeek = doomsdayAlgorithm(year, month, day);
-        string correctAnswer = getDayOfWeek(correctDayOfWeek);
+     //   int correctDayOfWeek = doomsdayAlgorithm(year, month, day);
+       // string correctAnswer = getDayOfWeek(correctDayOfWeek);
+       
+       int correctDayOfWeek = doomsdayAlgorithm(year, month, day);
 
-        if (answer == correctAnswer) {
+        if (answer == correctDayOfWeek) {
             score += 10;
             wrongGuesses = 0;
             mtx.lock();
